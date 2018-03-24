@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 import csv
 import logging
+from keras.utils import plot_model
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -77,6 +79,7 @@ if __name__ == "__main__":
     model.add(Dense(10))
     model.add(Dense(1))
     model.summary()
+    plot_model(model, to_file='model.png')
 
     model.compile(optimizer='adam', loss='mse')
     model.fit_generator(train_generator, steps_per_epoch=len(train_samples),
