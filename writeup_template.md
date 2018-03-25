@@ -19,12 +19,12 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/nvidia_net.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image2]: ./examples/center_2018_03_24_19_56_26_549.jpg "center image"
+[image3]: ./examples/left_2018_03_24_20_38_58_218.jpg "Recovery Image"
+[image4]: ./examples/center_2018_03_24_20_38_58_218.jpg "Recovery Image"
+[image5]: ./examples/right_2018_03_24_20_38_58_218.jpg "Recovery Image"
+[image6]: ./examples/left_2018_03_24_20_38_58_218.jpg "Normal Image"
+[image7]: ./examples/left_2018_03_24_20_38_58_218_fliped.jpg "Flipped Image"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.
@@ -54,9 +54,9 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24)
+My model consists of a convolution neural network with 3x3 or 5x5 filter sizes and depths between 24 and 100 (model.py lines 69-81). The model was first represented by NVIDIA for Controlling Steering angle.
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18).
+The model includes RELU layers to introduce nonlinearity (code line 71-75), and the data is normalized in the model using a Keras lambda layer (code line 69).
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -66,11 +66,11 @@ The model was trained and validated on different data sets to ensure that the mo
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 85).
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ...
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road.
 
 For details about how I created the training data, see the next section.
 
@@ -78,7 +78,7 @@ For details about how I created the training data, see the next section.
 
 #### 1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to derive
 
 My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
 
@@ -112,7 +112,7 @@ I then recorded the vehicle recovering from the left side and right sides of the
 ![alt text][image4]
 ![alt text][image5]
 
-Then I repeated this process on track two in order to get more data points.
+Then I repeated this process on same track but in reverse
 
 To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
 
@@ -127,3 +127,29 @@ After the collection process, I had X number of data points. I then preprocessed
 I finally randomly shuffled the data set and put Y% of the data into a validation set.
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+
+
+| Layer (type)                  | Output Shape        | Param # |
+| ----------------------------- | ------------------- | ------- |
+| lambda_1 (Lambda)             | (None, 160, 320, 3) | 0       |
+| cropping2d_1 (Cropping2D)     | (None, 65, 320, 3)  | 0       |
+| conv2d_1 (Conv2D)             | (None, 31, 158, 24) | 1824    |
+| dropout_1 (Dropout)           | (None, 31, 158, 24) | 0       |
+| conv2d_2 (Conv2D)             | (None, 14, 77, 36)  | 21636   |
+| dropout_2 (Dropout)           | (None, 14, 77, 36)  | 0       |
+| conv2d_3 (Conv2D)             | (None, 5, 37, 48)   | 43248   |
+| dropout_3 (Dropout)           | (None, 5, 37, 48)   | 0       |
+| conv2d_4 (Conv2D)             | (None, 3, 35, 64)   | 27712   |
+| dropout_4 (Dropout)           | (None, 3, 35, 64)   | 0       |
+| conv2d_5 (Conv2D)             | (None, 1, 33, 64)   | 36928   |
+| dropout_5 (Dropout)           | (None, 1, 33, 64)   | 0       |
+| flatten_1 (Flatten)           | (None, 2112)        | 0       |
+| dense_1 (Dense)               | (None, 100)         | 211300  |
+| dense_2 (Dense)               | (None, 50)          | 5050    |
+| dense_3 (Dense)               | (None, 10)          | 510     |
+| dense_4 (Dense)               | (None, 1)           | 11      |
+|                               |                     |         |
+| **Total params:** 348,219     |                     |         |
+| **Trainable params:** 348,219 |                     |         |
+| **Non-trainable params:** 0   |                     |         |
