@@ -64,6 +64,9 @@ if __name__ == "__main__":
 
     train_samples, validation_samples = train_test_split(lines, test_size=0.2)
 
+    logging.info("number of training samples: %s" % (len(train_samples)))
+    logging.info("number of validation samples: %s" % (len(validation_samples)))
+
     train_generator = generator(train_samples, 32)
     validation_generator = generator(validation_samples, 32)
 

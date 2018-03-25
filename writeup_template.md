@@ -80,11 +80,11 @@ For details about how I created the training data, see the next section.
 
 The overall strategy for deriving a model architecture was to derive
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the Nvidia Net. I thought this model might be appropriate because it had Convolution layers followed by 3 fully connected layer makes it perfect for regression.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting.
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model so that it does not overfit. For this I have added Dropout layers after each Convolution Layer, details described in next section.
 
 Then I ...
 
@@ -121,10 +121,10 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 Etc ....
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+After the collection process, I had 4461 number of data points. I then preprocessed this data by ...
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set.
+I finally randomly shuffled the data set and put 20% of the data into a validation set.
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
