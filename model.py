@@ -22,9 +22,15 @@ def generator(samples, batch_size=32):
 
             images = []
             angles = []
-            correct_factor = [0.2, 0.0, -0.2]
+            # For use of multiple camera images, can be possible if we slightly correct
+            # steering angles for left and right camera images by say 0.2 factor
+            # e.g. corrected_left_steering_angle = left_steering_angle + 0.2
+            #      corrected_right_steering_angle = right_steering_angle - 0.2
+            # keeping center steering angle as it is.
+            # correct_factor = [center, left, right]
+            correct_factor = [0.0, 0.2, -0.2]
             for batch_sample in batch_samples:
-                for i in range(3):
+                for i in range(3):  # 0. Center, 1. Left, 2. Right
                     name = batch_sample[i]
 
                     image = cv2.imread(name)
